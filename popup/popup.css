@@ -1,0 +1,25 @@
+.content {
+  background-color: #f0f0f0;
+}
+
+.button a {
+  padding:5px;
+  background-color: #17212d;
+  color: #ffffff;
+  cursor:pointer;
+  text-align: center;
+  display: block;
+  text-decoration: none;
+  border-radius: 5px;
+  outline: none;
+}
+
+.button a:hover {
+  text-decoration: none;
+  color: #ffffff;
+  background-color: #456488;
+}
+
+#error {
+  color: #af241e;
+}
