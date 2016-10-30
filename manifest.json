@@ -24,7 +24,7 @@
   },
   "content_scripts": [
     {
-      "matches": [ "https://github.com/*", "https://gitlab.*" ],
+      "matches": [ "https://*/*" ],
       "include_globs": [ "*/issues/*", "*/pull/*", "*/merge_requests/*" ],
       "js": ["./lib/jquery-3.0.0.min.js", "./content/content.js"],
       "run_at":  "document_start"
