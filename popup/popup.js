@@ -2,7 +2,7 @@ var Page = function() {
 };
 
 const KeyEmoji = "emoji";
-const KeyUrl = "url";
+const KeyToken = "token";
 
 Page.prototype.load = function() {
   var context = this;
@@ -11,15 +11,16 @@ Page.prototype.load = function() {
     tabId = tab[0].id;
   });
 
-  var url = localStorage.getItem(KeyUrl);
+  var token = localStorage.getItem(KeyToken);
   console.log("url = " + url);
-  if( url ) {
-    $('input[name="emoji_url"]').val(url);
+  if( token ) {
+    $('input[name="token"]').val(url);
   }
 };
 
 Page.prototype.getEmoji = function() {
-  var url = $('input[name="emoji_url"]').val();
+  var token = $('input[name="token"]').val()
+  var url = "https://slack.com/api/emoji.list?token=" + token;
   if( url ) {
     $.getJSON(url, function() {
       // do nothing
@@ -32,7 +33,7 @@ Page.prototype.getEmoji = function() {
 
       localStorage.clear();
       localStorage.setItem(KeyEmoji, JSON.stringify(result));
-      localStorage.setItem(KeyUrl, url);
+      localStorage.setItem(KeyToken, token);
 
       $("#error").text('emoji.listの取得成功');
     })
