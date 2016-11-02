@@ -1,4 +1,7 @@
 function replace() {
+  var siteName = $('meta[property="og:site_name"]').attr("content")
+  if( !siteName.match(/GitLab|GitHub/i)) { return; }
+
   const KeyEmoji = "emoji";
   chrome.runtime.sendMessage({method: "localStorage", key: KeyEmoji}, function(response) {
     var emoji = JSON.parse(response.data);

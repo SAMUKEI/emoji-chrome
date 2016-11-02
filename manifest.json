@@ -1,6 +1,6 @@
 {
   "name": "絵文字くん",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "manifest_version": 2,
   "description": "殺伐としたIssue、PullRequestに一時の癒やしを・・・",
   "permissions": [
