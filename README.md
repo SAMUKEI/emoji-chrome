@@ -1,7 +1,7 @@
 
 ## What is 絵文字くん
 
-GithubでSlackのカスタム絵文字を表示できるChrome Extensionです。
+Github/GitlabでSlackのカスタム絵文字を表示できるChrome Extensionです。
 殺伐としたIssue、PullRequestに一時の癒やしを与えてくれます。
 
 ## インストール方法
