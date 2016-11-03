@@ -26,7 +26,15 @@
     {
       "matches": [ "https://*/*" ],
       "include_globs": [ "*/issues/*", "*/pull/*", "*/merge_requests/*" ],
-      "js": ["./lib/jquery-3.0.0.min.js", "./content/content.js"],
+      "css": [
+        "lib/css/jquery.atwho.min.css"
+      ],
+      "js": [
+        "lib/js/jquery-3.0.0.min.js",
+        "lib/js/jquery.caret.min.js",
+        "lib/js/jquery.atwho.min.js",
+        "content/content.js"
+      ],
       "run_at":  "document_start"
     }
   ],
