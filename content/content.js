@@ -2,7 +2,7 @@ function loadEmoji() {
   return new Promise((resolve, reject) => {
     // Github/Gitlabのみ対象
     var siteName = $('meta[property="og:site_name"]').attr("content")
-    if( !siteName.match(/GitLab|GitHub/i)) { reject(); }
+    if( siteName === undefined || !siteName.match(/GitLab|GitHub/i)) { return reject(); }
 
     const KeyEmoji = "emoji";
     chrome.runtime.sendMessage({method: "localStorage", key: KeyEmoji}, function(response) {
@@ -45,24 +45,23 @@ function replace(emoji) {
   });
 }
 
-jQuery(function ($) {
-  loadEmoji().then(function(emoji) {
-    // サジェスト
-    var emojisList = $.map(emoji, function(value, name) {
-      return {'url':value, 'name':name.replace(/:/g, "")};
-    });
-    $('textarea').atwho({
-      at: ':',
-      displayTpl: "<li><img src='${url}' height='32' width='32'/> ${name} </li>",
-      insertTpl: ":${name}:",
-      data: emojisList
-    });
+function suggest(emoji) {
+  var emojisList = $.map(emoji, function(value, name) {
+    return {'url':value, 'name':name.replace(/:/g, "")};
   });
-});
+  $('textarea').atwho({
+    at: ':',
+    displayTpl: "<li><img src='${url}' height='32' width='32'/> ${name} </li>",
+    insertTpl: ":${name}:",
+    data: emojisList
+  });
+}
 
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
   loadEmoji().then(function (emoji){
+    // サジェスト
+    suggest(emoji);
     // 絵文字の書き換え
     replace(emoji);
-  });
+  }).catch(function () { });
 });
