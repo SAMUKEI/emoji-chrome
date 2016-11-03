@@ -25,7 +25,6 @@
   "content_scripts": [
     {
       "matches": [ "https://*/*" ],
-      "include_globs": [ "*/issues/*", "*/pull/*", "*/merge_requests/*" ],
       "css": [
         "lib/css/jquery.atwho.min.css"
       ],
