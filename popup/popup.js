@@ -12,9 +12,10 @@ Page.prototype.load = function() {
   });
 
   var token = localStorage.getItem(KeyToken);
-  console.log("url = " + url);
+  console.log("url = " + token);
   if( token ) {
-    $('input[name="token"]').val(url);
+    $('input[name="token"]').val(token);
+    $('#setup-text').text("emoji.listの更新");
   }
 };
 

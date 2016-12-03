@@ -1,9 +1,5 @@
 function loadEmoji() {
   return new Promise((resolve, reject) => {
-    // Github/Gitlabのみ対象
-    var siteName = $('meta[property="og:site_name"]').attr("content")
-    if( siteName === undefined || !siteName.match(/GitLab|GitHub/i)) { return reject(); }
-
     const KeyEmoji = "emoji";
     chrome.runtime.sendMessage({method: "localStorage", key: KeyEmoji}, function(response) {
       var emoji = JSON.parse(response.data);
@@ -16,8 +12,8 @@ function loadEmoji() {
   });
 }
 
-function replace(emoji) {
-  $('p').each(function() {
+function replaceElement(emoji, element) {
+  $(element).each(function() {
       var text = $(this).html();
       $(this).html(
           text.replace(/:([a-z0-9A-Z_-]+):/g, function(match) {
@@ -58,10 +54,23 @@ function suggest(emoji) {
 }
 
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+  // Github/Gitlabのみ対象
+  var siteName = $('meta[property="og:site_name"]').attr("content")
+  if( siteName === undefined || !siteName.match(/GitLab|GitHub/i)) { return; }
+
+  // 絵文字対象
+  var path = location.pathname;
+  if( path === undefined || !path.match(/issues|pull|compare|merge_requests/)) { return; }
+
   loadEmoji().then(function (emoji){
     // サジェスト
     suggest(emoji);
     // 絵文字の書き換え
-    replace(emoji);
+    var isGitHub = siteName.match(/GitHub/i) !== null;
+    if( isGitHub ) {
+      replaceElement(emoji, '.markdown-body');
+    } else {
+      replaceElement(emoji, '.wiki, .note-text');
+    }
   }).catch(function () { });
 });
